@@ -2,19 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//alttaki satýr eklendiðinde bu scripti kullanan nesnelerde rigidbody kullanýlmasý zorunlu olur. 
+//[RequireComponent(typeof(Rigidbody))]
+
 public class NewBehaviourScript : MonoBehaviour
 {
     [SerializeField] // bu attribute ile ilgili deðiþken inspector'dan deðiþtirilebilir demek
     private float _forwardSpeed; // public olursa encapsulation'a aykýrý
+
     [SerializeField]
     private float _horizantalSpeed;
 
+    [SerializeField]
+    private Rigidbody _rigidBody;
 
+    private Vector3 _velocity = new Vector3();
 
+    private void Awake()
+    {
+        _rigidBody = GetComponent<Rigidbody>();
+    }
     // Start is called before the first frame update
     private void Start()
     {
-        Debug.Log("Hello world!");
+        //Debug.Log("Hello world!");
     }
 
     // Update is called once per frame
@@ -34,20 +45,21 @@ public class NewBehaviourScript : MonoBehaviour
         
          */
 
-        Vector3 velocity = Vector3.forward * _forwardSpeed;
-        
-        velocity.z = _forwardSpeed;
-        velocity.x = Input.GetAxis("Horizontal") * _horizantalSpeed;
+        //Vector3 velocity = Vector3.forward * _forwardSpeed;
+
+        _velocity.z = _forwardSpeed;
+        _velocity.x = Input.GetAxis("Horizontal") * _horizantalSpeed;
 
         //Debug.Log(Input.GetAxis("Horizontal"));
 
-        transform.position += velocity * Time.deltaTime;
+        // transform.position += velocity * Time.deltaTime;
 
+    }
 
-
-
-
-
+    // fizikle alakalý iþlemler fixedupdate ile yapýlýr
+    private void FixedUpdate()
+    {
+        _rigidBody.velocity = _velocity;
 
     }
 }
