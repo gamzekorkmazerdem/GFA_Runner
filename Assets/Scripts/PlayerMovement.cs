@@ -48,6 +48,7 @@ public class NewBehaviourScript : MonoBehaviour
         //Vector3 velocity = Vector3.forward * _forwardSpeed;
 
         _velocity.z = _forwardSpeed;
+        _velocity.y = _rigidBody.velocity.y;
         _velocity.x = Input.GetAxis("Horizontal") * _horizantalSpeed;
 
         //Debug.Log(Input.GetAxis("Horizontal"));
