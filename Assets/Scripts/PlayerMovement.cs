@@ -31,7 +31,7 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // GetComponent<Transform>() = transform;
+        // GetComponent<Transform>() == transform;
 
         // karakter her frame'de 1 birim ileri gider
         // Eðer fps = 60 => Time.deltaTime == 0.016f;

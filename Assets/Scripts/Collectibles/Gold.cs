@@ -6,8 +6,8 @@ public class Gold : Collectibles
 {
     protected override void OnCollected()
     {
-        GameInstances.Instance.Gold++;
-        Debug.Log(GameInstances.Instance.Gold);
+        //GameInstances.Instance.Gold++;
+        //Debug.Log(GameInstances.Instance.Gold);
     }
 }
 
