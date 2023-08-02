@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gold : Collectibles
+public class Gold : Collectible
 {
     protected override void OnCollected()
     {
-        //GameInstances.Instance.Gold++;
-        //Debug.Log(GameInstances.Instance.Gold);
+        GameInstance.Instance.Gold++;
+
+        Debug.Log(GameInstance.Instance.Gold);
     }
 }
 
