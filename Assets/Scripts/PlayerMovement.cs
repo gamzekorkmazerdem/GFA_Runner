@@ -55,6 +55,9 @@ public class NewBehaviourScript : MonoBehaviour
 
         //Vector3 velocity = Vector3.forward * _forwardSpeed;
 
+        if(!GameInstance.Instance.IsGameStarted)
+            return;
+
         _velocity.z = _forwardSpeed;
         _velocity.y = _rigidBody.velocity.y;
         _velocity.x = Input.GetAxis("Horizontal") * _horizantalSpeed;

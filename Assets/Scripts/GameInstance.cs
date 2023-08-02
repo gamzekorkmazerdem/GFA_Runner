@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -15,18 +16,77 @@ public class GameInstance : MonoBehaviour
      */
     private static GameInstance _instance;
 
-    public int Gold { get; set; }
     public int Level { get; set; }
+
+
+    // altýn toplandýðýnda dinlenecek olayý tanýmladýk
+    // <> içinde tanýmlama yapýldýðýnda GoldChanged eventinin metodu int parametre alýyor demektir
+    // invoke ile ilgili parametreyi vermek gerekir
+    public event Action<int> GoldChanged;
+
+    public event Action GameStarted;
+
+    public event Action GameEnded;
+
+    public event Action Won;
+
+    public event Action Lost;
+
+    public bool IsGameStarted { get; private set; }
+
+    public void StartGame()
+    {
+        IsGameStarted = true;
+        GameStarted?.Invoke();
+    }
+
+    private void EndGame()
+    {
+        IsGameStarted = false;
+        GameEnded?.Invoke();
+    }
+
+
+    private int _gold;
+
+    public int Gold
+    {
+        get => _gold;
+        /*
+         * get
+         * {
+         *      return _gold;
+         * }
+         * 
+         * üstteki get bununla ayný iþi yapýyor
+         * */
+        set
+        {
+            _gold = value;
+            // gold deðeri her deðiþtiðinde ilgili olay kontrol edilsin
+            GoldChanged?.Invoke(_gold);
+            /*
+             * if(GoldChaned != null)
+             *      GoldChanged.Invoke();
+             *      
+             * bu yukarýdaki ile ayný
+             * */
+        }
+    }
+
+
     public void Win()
     {
-        Debug.Log("You win!");
         Level++;
-        SceneManager.LoadScene(0);
+        EndGame();
+
+        Won?.Invoke();
     }
+
     public void Lose()
     {
-        Debug.Log("You lose!");
-        SceneManager.LoadScene(0);
+        EndGame();
+        Lost?.Invoke();
     }
 
     // dýþardaki objelerin bu nesneye eriþmesi için prop oluþturuldu
