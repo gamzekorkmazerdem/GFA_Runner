@@ -18,6 +18,14 @@ public class NewBehaviourScript : MonoBehaviour
 
     private Vector3 _velocity = new Vector3();
 
+    [SerializeField]
+    private float _jumpPower;
+
+    private bool _isGrounded;
+
+    [SerializeField]
+    private float _maxHorizontalDistance;
+
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
@@ -55,12 +63,43 @@ public class NewBehaviourScript : MonoBehaviour
 
         // transform.position += velocity * Time.deltaTime;
 
+        // space e basýldýðý anda ve zemindeysek karakterin zýplamasý için yapýlacak iþlemler
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        {
+            // burada inputla alakalý iþlem yapýldý
+            // bu tek seferlik çalýþacak bir durum
+            // rigidbody kullansak da bu sebeple fixedupdate e deðil update e yazdýk
+
+            _rigidBody.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
+            _isGrounded = false;
+        }
+
     }
 
     // fizikle alakalý iþlemler fixedupdate ile yapýlýr
     private void FixedUpdate()
     {
+
+        // player ýn gidebileceði alaný kýsýtlamak için kontrol yapýlýr
+        // eðer player ýn bulunduðu x konumu max distance dan fazlaya
+        // clamp ile player ýn bulunduðu x konumu kýsýtlanarak -max +max arasýna çekilir 
+
+        if (Mathf.Abs(_rigidBody.position.x) > _maxHorizontalDistance)
+        {
+            var clampedPosition = _rigidBody.position;
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, -_maxHorizontalDistance, _maxHorizontalDistance);
+        
+            _rigidBody.position = clampedPosition;
+            _velocity.x = 0;
+        }
+
         _rigidBody.velocity = _velocity;
 
+
+        Debug.DrawRay(_rigidBody.position, Vector3.down * 1.05f);
+        _isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.05f);
+        
+
+        
     }
 }

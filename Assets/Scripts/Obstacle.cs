@@ -8,9 +8,28 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.rigidbody.CompareTag("Player")) //çarpýþtýðýmýz objenin tag i player ise iþlem yap
         {
-            //Destroy(collision.rigidbody);
-            //Debug.Log("Collision Enter: " + collision.rigidbody.name);
-            GameInstance.Instance.Lose();
+            // nesneye yalnýzca geldiðimiz yönden çarpýnca oyun bitsin
+            // engellere yandan çarpýlabilsin
+            // bunun için aþaðýdaki iþlemler yapýlmalý
+            // getcontact ile çarpýþma yüzeyinin normal vektörü bulunur
+            var hitNormal = collision.GetContact(0).normal;
+
+            // Dot vektörü verilen iki vektörün nokta çarpýmýný alýr
+            // yani iki vektörün ayný yöne bakýp bakmadýðýný kontrol eder
+            // eðer ayný yöne bakýyorlarsa 1, bakmýyorlarsa -1 döndürür
+
+            var hitDot = Vector3.Dot(hitNormal, Vector3.forward);
+            
+            // tam eþitlik kontrolü yapýlmamalý
+            // çünkü dot iþlemi yapýlýyor
+            // float ile yapýlan iþlemlerde otomatik yuvarlama yapýlabilir
+            // bu durumda istenen tam eþitlik saðlanamayabilir 
+            if(hitDot > 0.99f)
+            {
+                GameInstance.Instance.Lose();
+            }
+
+            
         }
         else
         {
