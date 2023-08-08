@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GoldDisplay : MonoBehaviour
+public class LevelDisplay : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text _text;
@@ -16,26 +15,25 @@ public class GoldDisplay : MonoBehaviour
     private void OnEnable()
     {
         // burada GoldChaned event ine OnGoldChanged metodunu baðlýyoruz
-        GameInstance.Instance.GoldChanged += OnGoldChanged;
+        GameInstance.Instance.LevelChanged += OnLevelChanged;
         UpdateUI();
     }
     private void OnDisable()
     {
-        GameInstance.Instance.GoldChanged -= OnGoldChanged;
+        GameInstance.Instance.LevelChanged -= OnLevelChanged;
     }
 
-    private void OnGoldChanged(int gold)
+    private void OnLevelChanged(int level)
     {
-        UpdateUI(gold);
+        UpdateUI(level);
     }
 
     private void UpdateUI()
     {
-        UpdateUI(GameInstance.Instance.Gold);
+        UpdateUI(GameInstance.Instance.Level);
     }
-    private void UpdateUI(int goldValue)
+    private void UpdateUI(int levelValue)
     {
-        _text.text = goldValue.ToString();
+        _text.text = "Level: " + (levelValue + 1).ToString();
     }
-
 }

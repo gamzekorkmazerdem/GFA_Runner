@@ -16,13 +16,13 @@ public class GameInstance : MonoBehaviour
      */
     private static GameInstance _instance;
 
-    public int Level { get; set; }
-
-
+    
     // altýn toplandýðýnda dinlenecek olayý tanýmladýk
     // <> içinde tanýmlama yapýldýðýnda GoldChanged eventinin metodu int parametre alýyor demektir
     // invoke ile ilgili parametreyi vermek gerekir
     public event Action<int> GoldChanged;
+
+    public event Action<int> LevelChanged;
 
     public event Action GameStarted;
 
@@ -46,6 +46,17 @@ public class GameInstance : MonoBehaviour
         GameEnded?.Invoke();
     }
 
+    public int _level;
+
+    public int Level
+    {
+        get => _level;
+        set
+        {
+            _level = value;
+            LevelChanged?.Invoke(_level);
+        }
+    }
 
     private int _gold;
 
@@ -74,6 +85,16 @@ public class GameInstance : MonoBehaviour
         }
     }
 
+    public void LoadCurrentLevel()
+    {
+        // Win() metodu içerisinde level++ yaptýrýyoruz bu yüzden burada var olunan level sonraki level olmuþ oluyor
+        SceneManager.LoadScene(0);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
 
     public void Win()
     {

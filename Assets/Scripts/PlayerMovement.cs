@@ -56,7 +56,11 @@ public class NewBehaviourScript : MonoBehaviour
         //Vector3 velocity = Vector3.forward * _forwardSpeed;
 
         if(!GameInstance.Instance.IsGameStarted)
+        {
+            _velocity = Vector3.zero;
             return;
+        }
+            
 
         _velocity.z = _forwardSpeed;
         _velocity.y = _rigidBody.velocity.y;
