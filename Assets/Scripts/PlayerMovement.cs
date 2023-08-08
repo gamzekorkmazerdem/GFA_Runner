@@ -5,7 +5,7 @@ using UnityEngine;
 //alttaki satýr eklendiðinde bu scripti kullanan nesnelerde rigidbody kullanýlmasý zorunlu olur. 
 //[RequireComponent(typeof(Rigidbody))]
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] // bu attribute ile ilgili deðiþken inspector'dan deðiþtirilebilir demek
     private float _forwardSpeed; // public olursa encapsulation'a aykýrý
@@ -20,6 +20,12 @@ public class NewBehaviourScript : MonoBehaviour
 
     [SerializeField]
     private float _jumpPower;
+
+    public float JumpPower
+    {
+        get => _jumpPower; 
+        set { _jumpPower = value; }
+    }
 
     private bool _isGrounded;
 

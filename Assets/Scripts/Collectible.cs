@@ -11,9 +11,9 @@ public abstract class Collectible : MonoBehaviour
         {
             // eðer player nesneye çarpmýþsa toplama metodu çalýþsýn
             // ve toplanan nesne yok edilsin
-            OnCollected();
+            OnCollected(other.gameObject);
             Destroy(gameObject);
         }
     }
-    protected abstract void OnCollected();
+    protected abstract void OnCollected(GameObject collected);
 }

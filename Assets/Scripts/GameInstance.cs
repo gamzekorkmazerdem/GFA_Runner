@@ -85,6 +85,8 @@ public class GameInstance : MonoBehaviour
         }
     }
 
+    public float GoldMultiplier { get; set; } = 1;
+
     public void LoadCurrentLevel()
     {
         // Win() metodu içerisinde level++ yaptýrýyoruz bu yüzden burada var olunan level sonraki level olmuþ oluyor
