@@ -18,7 +18,7 @@ public class MagnetFollower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime); // ilk verilen parametreden ikinci parametreye üçüncü parametredeki hýzla ilerlemeye yarayan metot
+        transform.position = Vector3.MoveTowards(transform.position, _target.position, _speed * Time.deltaTime); // ilk verilen parametreden ikinci parametreye üçüncü parametredeki hýzla ilerlemeye yarayan metot
     }
 
 }

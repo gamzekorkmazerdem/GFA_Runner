@@ -11,6 +11,10 @@ public class BoosterContainer : MonoBehaviour
      * 
      */
     public List<BoosterInstance> _activeBoosters = new List<BoosterInstance>();
+
+    public event Action<BoosterInstance> BoosterAdded;
+    public event Action<Booster> BoosterRemoved;
+
     public void AddBooster(Booster booster)
     {
         // bütün aktif booster lar kontrol edilir.
@@ -28,6 +32,8 @@ public class BoosterContainer : MonoBehaviour
         var boosterInstance = new BoosterInstance(booster);
         _activeBoosters.Add(boosterInstance);
         booster.OnAdded(this);
+        BoosterAdded?.Invoke(boosterInstance);
+
     }
 
     public void RemoveBooster(Booster booster)
@@ -61,6 +67,7 @@ public class BoosterContainer : MonoBehaviour
             {
                 instance.Booster.OnRemoved(this);
                 _activeBoosters.RemoveAt(i);
+                BoosterRemoved?.Invoke(instance.Booster);
             }
         }
     }

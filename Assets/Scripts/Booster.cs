@@ -13,6 +13,8 @@ public abstract class Booster : ScriptableObject
     [SerializeField]
     private Sprite _icon;
 
+    public Sprite Icon { get { return _icon; } }
+
     [SerializeField]
     private float _duration;
     
